@@ -2,8 +2,6 @@
 
 Tensorflow implementation of SqueezeNet following this [paper](https://arxiv.org/abs/1602.07360). Referenced Caffe code can be found [here](https://github.com/DeepScale/SqueezeNet).
 
-<img src="https://raw.githubusercontent.com/Tandon-A/SqueezeNet/master/assets/Model.PNG" height="400" alt="SqueezeNet Model Definition ">
-
 
 ## Prerequisites
 
@@ -31,11 +29,3 @@ Tensorflow implementation of SqueezeNet following this [paper](https://arxiv.org
 * Starting convolution filter of kernel size = 3 and output filters = 64
 * Pool layers used after conv1, fire3 and fire5. 
 
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](https://github.com/Tandon-A/Image-Editing-using-GAN/blob/master/LICENSE) file for details
-
-## Author 
-
-Abhishek Tandon/ [@Tandon-A](https://github.com/Tandon-A)
