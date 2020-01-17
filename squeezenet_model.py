@@ -1,4 +1,5 @@
 import tensorflow as tf 
+import numpy as np
 
 """
 Class file for SqueezeNet Model
@@ -103,17 +104,34 @@ class SqueezeNet:
     #Function to optimize the models. 
     def model_opti(self,loss_v1,lr_rate):
         
-        train_vars = tf.trainable_variables()
+        #train_vars = tf.trainable_variables()
 
-        v1_vars = [var for var in train_vars if var.name.startswith('squeezenet_v1')]        
-        
+        #v1_vars = [var for var in train_vars if var.name.startswith('squeezenet_v1')]        
+        v1_vars = tf.Variable()
         #Using Adam Optimizer 
         with tf.control_dependencies(tf.get_collection(tf.GraphKeys.UPDATE_OPS)):
 
             v1_train_opt = tf.train.AdamOptimizer(lr_rate).minimize(loss_v1,var_list=v1_vars)
             
         return v1_train_opt
-        
+    
+    def load(self, data_path, session, ignore_missing=False):
+        '''Load network weights.
+        data_path: The path to the numpy-serialized network weights
+        session: The current TensorFlow session
+        ignore_missing: If true, serialized weights for missing layers are ignored.
+        '''
+        data_dict = np.load(data_path).item()
+        for op_name in data_dict:
+            with tf.variable_scope(op_name, reuse=True):
+                for param_name, data in data_dict[op_name].iteritems():
+                    try:
+                        var = tf.get_variable(param_name)
+                        session.run(var.assign(data))
+                    except ValueError:
+                        if not ignore_missing:
+                            raise
+
         
         
         
